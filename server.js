@@ -17,9 +17,7 @@ app.use('/js', express.static(__dirname+'public/js'));
 
 
 app.get('/', async(req, res)=>{
-
     res.render('index');
-
 });
 
 app.listen(port, console.log(`Listning on port ${port}`));
