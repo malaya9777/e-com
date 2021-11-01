@@ -1,13 +1,26 @@
 const express = require('express');
 const mongodb = require('mongodb');
 const ejs = require('ejs');
-const path = require('path')
+const path = require('path');
+const multer = require('multer');
+const bodyParser = require('body-parser');
+const cookieParser =require('cookie-parser');
+const session = require('express-session');
 
 const app = express();
+const upload = multer();
 const port = 3000;
 
 app.engine('html', ejs.renderFile);
 app.set('view engine', 'ejs');
+app.use(bodyParser.json);
+app.use(upload.array());
+app.use(cookieParser());
+app.use(session({secret:''}))
+
+
+
+
 app.use(express.static('public'));
 app.set('views', path.join(__dirname, 'public/views'));
 app.use('/css', express.static(__dirname+'public/css'));
