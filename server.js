@@ -9,14 +9,14 @@ const session = require('express-session');
 
 const app = express();
 const upload = multer();
-const port = 3000;
+const port = 3005;
 
 app.engine('html', ejs.renderFile);
 app.set('view engine', 'ejs');
 app.use(bodyParser.json);
 app.use(upload.array());
 app.use(cookieParser());
-app.use(session({secret:''}))
+app.use(session({secret:'This is my secret'}))
 
 
 
@@ -30,6 +30,7 @@ app.use('/js', express.static(__dirname+'public/js'));
 
 
 app.get('/', async(req, res)=>{
+    console.log('Request received')
     res.render('index');
 });
 
