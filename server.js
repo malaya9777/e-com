@@ -30,6 +30,7 @@ app.use('/js', express.static(__dirname+'public/js'));
 
 
 app.get('/', async(req, res)=>{
+    console.log('Request received')
     res.render('index');
 });
 
