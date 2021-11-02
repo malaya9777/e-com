@@ -6,22 +6,22 @@ const multer = require('multer');
 const bodyParser = require('body-parser');
 const cookieParser =require('cookie-parser');
 const session = require('express-session');
+const crypto =require('crypto');
 
 const app = express();
 const upload = multer();
-const port = 3000;
+const port = 8181;
 
 app.engine('html', ejs.renderFile);
 app.set('view engine', 'ejs');
-app.use(bodyParser.json);
 app.use(upload.array());
 app.use(cookieParser());
-app.use(session({secret:''}))
+app.use(session({secret:crypto.randomBytes(20).toString("hex"), resave:true, saveUninitialized:true}))
 
 
 
 
-app.use(express.static('public'));
+
 app.set('views', path.join(__dirname, 'public/views'));
 app.use('/css', express.static(__dirname+'public/css'));
 app.use('/img', express.static(__dirname+'public/img'));
@@ -32,5 +32,11 @@ app.use('/js', express.static(__dirname+'public/js'));
 app.get('/', async(req, res)=>{
     res.render('index');
 });
+
+app.get('/admin', async(req,res)=>{
+    res.render('admin_index')
+})
+
+
 
 app.listen(port, console.log(`Listning on port ${port}`));
