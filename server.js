@@ -36,6 +36,10 @@ app.get('/', async(req, res)=>{
 
 app.get('/admin', async(req,res)=>{
     res.render('admin_index')
+});
+
+app.get('/admin/dashboard', checkSignin, async(req, res)=>{
+    res.render('')
 })
 
 
