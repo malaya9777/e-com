@@ -3,10 +3,10 @@ const mongodb = require('mongodb');
 const ejs = require('ejs');
 const path = require('path');
 const multer = require('multer');
-const bodyParser = require('body-parser');
 const cookieParser =require('cookie-parser');
 const session = require('express-session');
 const crypto =require('crypto');
+
 
 const app = express();
 const upload = multer();
@@ -19,14 +19,11 @@ app.use(cookieParser());
 app.use(session({secret:crypto.randomBytes(20).toString("hex"), resave:true, saveUninitialized:true}))
 
 
-
-
-
 app.set('views', path.join(__dirname, 'public/views'));
-app.use('/css', express.static(__dirname+'public/css'));
-app.use('/img', express.static(__dirname+'public/img'));
-app.use('/assests', express.static(__dirname+'public/assests'));
-app.use('/js', express.static(__dirname+'public/js'));
+app.use('/css', express.static(path.join(__dirname,'public/css')));
+app.use('/img', express.static(path.join(__dirname,'public/img')));
+app.use('/assests', express.static(path.join(__dirname,'public/assests')));
+app.use('/js', express.static(path.join(__dirname,'public/js')));
 
 
 app.get('/', async(req, res)=>{
@@ -39,8 +36,16 @@ app.get('/admin', async(req,res)=>{
 });
 
 app.get('/admin/dashboard', checkSignin, async(req, res)=>{
-    res.render('')
-})
+    res.render('admin_dashboard')
+});
+
+function checkSignin(req, res, next){
+    if(req.session.user){
+        next();
+    }else{
+        next(new Error('User Not logged in!'))
+    }
+}
 
 
 
