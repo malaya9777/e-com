@@ -1,0 +1,23 @@
+
+.flex{
+    display: flex;
+}
+.inline-flex{
+    
+}
+.col-one{
+    
+}
+label, input{
+    margin: 10px;
+    display: block;
+}
+input{
+
+}
+
+.container{
+    display: block;
+    max-width: 1080px;
+    margin: auto;
+}

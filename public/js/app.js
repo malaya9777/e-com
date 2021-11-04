@@ -1,1 +1,1 @@
-alert('hello from app.js')
+console.log('script file loaded')
