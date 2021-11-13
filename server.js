@@ -53,8 +53,10 @@ app.post('/admin/login', async (req, res) => {
         console.log(user);
         if (user) {
             req.session.user = user;
+            req.session.loggedIn = true;
             res.redirect('/admin/dashboard')
         } else {
+            req.session.loggedIn = false;
             res.render('admin_index', { title: 'Login failed', message: 'Username or password!', messageType: true })
         }
 
@@ -77,11 +79,15 @@ app.get('/admin/profile', checkSignin, async(req, res)=>{
     res.render('admin_profile')
 });
 app.get('/admin/logout', checkSignin, async(req, res)=>{
-    delete req.session.user;
-})
+    req.session.loggedIn = false;
+    res.redirect('/signout');
+});
+app.get('/signout', async(req, res)=>{
+    res.render('signout')
+});
 
 function checkSignin(req, res, next) {
-    if (req.session.user) {
+    if (req.session.loggedIn && req.session.user) {
         next();
     } else {
         res.redirect('/admin')
